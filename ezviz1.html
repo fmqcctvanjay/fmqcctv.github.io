@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-54XT78S9ED"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'G-54XT78S9ED');
+        </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+    <title>FMQ CCTV</title>
+    <link rel="stylesheet" href="style.css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" /> 
+</head>
+<body class="psn"> 
+
+    <div class="container">
+        <div class="row psn-ezviz1 justify-content-center">
+            <div class="col-lg-3 psnn">
+              <img src="img/Ezviz1.png" alt="Ezviz CCTV">
+              <h3 id="price">Rp1.950.000,00</h3>
+            </div>
+            <div class="col-lg-3 data">
+                <form action="#" onsubmit="sendMail(); return false;">
+                    <table>
+                        <tr>
+                            <td>
+                                <input type="text" id="subject" placeholder="Masukkan Nama" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="email" id="email_subject" placeholder="Masukkan Email" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="tel" id="notel" placeholder="Masukkan Nomor WA" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <textarea name="alamat" id="alamat" placeholder="Masukkan Alamat"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <input type="radio" id="paket" name="paket" value="Paket 2 CCTV Ezviz" required>
+                            <label for="paket">Paket 2 CCTV Ezviz</label>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <input type="radio" id="price" name="price" value="Rp1.350.000,00" required>
+                            <label for="price">Rp1.950.000,00 <span style="color: transparent;">........</span></label>
+                          </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button type="submit">Pesan Sekarang</button>
+                            </td>
+                        </tr>                        
+                        <tr>
+                            <td>
+                                <a class="btn2" href="paket.html#ezviz" role="button">Batalkan Pesanan</a>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="bootstrap/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        function sendMail() {
+            const subject = document.querySelector("#subject").value;
+            const email_subject = document.querySelector("#email_subject").value;
+            const notel = document.querySelector("#notel").value;
+            const alamat = document.querySelector("#alamat").value;
+            const paket = document.querySelector('input[name="paket"]:checked')?.value; 
+            const price = document.querySelector('input[name="price"]:checked')?.value; 
+
+            if (!subject || !email_subject || !notel || !alamat || !paket || !price) {
+                Swal.fire({
+                    title: "Terjadi Kesalahan!",
+                    text: "Silahkan Isi Semua Kolom",
+                    icon: "warning"
+                });
+                return; // Stop if validation fails
+            }
+
+            emailjs.init("n8QI9NOH9_pVdSoAw");
+
+            var params = {
+                subject: subject,
+                email_subject: email_subject,
+                notel: notel,
+                alamat: alamat,
+                paket: paket,
+                price: price
+            };
+
+            var serviceID = "service_vmj8f35";
+            var templateID = "template_iih0mxa";
+
+            emailjs.send(serviceID, templateID, params)
+                .then(res => {
+                    Swal.fire({
+                        title: "Terkirim!",
+                        text: "Cek Emailmu Untuk Konfirmasi!",
+                        icon: "success"
+                    });
+
+                    // Reset form setelah pengiriman berhasil
+                    document.querySelector("form").reset();
+                })
+                .catch(err => {
+                    Swal.fire({
+                        title: "Gagal!",
+                        text: "Pesananmu Gagal Terkirim!",
+                        icon: "error"
+                    });
+                });
+        }
+    </script>
+</body>
+</html>
